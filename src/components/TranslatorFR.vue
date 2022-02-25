@@ -1,6 +1,5 @@
 <template>
   <div class="translator">
-
     <div class="form" @keyup.enter="searchData">
         <b-form-input class="input" v-model="searchID" placeholder="Enter ID"></b-form-input>
         OR
@@ -112,7 +111,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import completedTask from './completedTask.vue'
 
 export default {
@@ -130,7 +128,6 @@ export default {
             searchMC: null,
             searchName: null,
             searchID: null,
-            recipeInput: null,
             recipeOutput: {
                 name: "",
                 id: "",
@@ -196,11 +193,11 @@ export default {
             return this.$store.commit("updataList", addItem)
         }
     },
-    mounted() {
-        axios.get('http://localhost:3500/recipe')
-        .then(res => this.recipeInput = res.data)
-        .catch(err => console.error(err));
-    },
+    computed: {
+        recipeInput(){
+            return this.$store.state.FRrecipe
+        }
+    }
 }
 </script>
 
