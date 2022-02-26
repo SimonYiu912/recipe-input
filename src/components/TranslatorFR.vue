@@ -151,8 +151,8 @@ export default {
     methods: {
         searchData(){
             let result = this.recipeInput.filter(recipe => recipe.id == this.searchID 
-                                                            || (recipe.name.replace(/-/g," ").slice(0, this.searchName.length).toLowerCase() == this.searchName.toLowerCase())
-                                                            && recipe.machineType == this.searchMC);
+                                                            || (recipe.name.replace(/-/g," ").replace(/#/g,"").slice(0, this.searchName.length).toLowerCase() == this.searchName.toLowerCase()
+                                                            && recipe.machineType == this.searchMC));
             this.result = result
             if(result.length !== 0){
                 this.isFound = true;

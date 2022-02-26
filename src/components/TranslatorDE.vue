@@ -1,6 +1,6 @@
 <template>
   <div class="translator">
-    
+
     <div class="form" @keyup.enter="searchData">
         <b-form-input class="input" v-model="searchID" placeholder="Enter ID"></b-form-input>
         OR
@@ -152,8 +152,8 @@ export default {
     methods: {
         searchData(){
             let result = this.recipeInput.filter(recipe => recipe.id == this.searchID 
-                                                            || (recipe.name.replace(/-/g," ").slice(0, this.searchName.length).toLowerCase() == this.searchName.replace(/-/g," ").toLowerCase())
-                                                            && recipe.machineType == this.searchMC);
+                                                            || (recipe.name.replace(/-/g," ").replace(/#/g,"").slice(0, this.searchName.length).toLowerCase() == this.searchName.replace(/-/g," ").toLowerCase()
+                                                            && recipe.machineType == this.searchMC));
             this.result = result
             if(result.length !== 0){
                 this.isFound = true;
