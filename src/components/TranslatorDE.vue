@@ -1,6 +1,5 @@
 <template>
   <div class="translator">
-
     <div class="form" @keyup.enter="searchData">
         <b-form-input class="input" v-model="searchID" placeholder="Enter ID"></b-form-input>
         OR
@@ -10,6 +9,7 @@
             <option>mc1</option>
             <option>mc2</option>
         </b-form-select>
+
         <b-button class="search" variant="danger" @click="searchData">Search</b-button>
         <b-button class="search" variant="warning" @click="clearInput">Clear</b-button>
     </div>
@@ -44,6 +44,8 @@
             {{ tags.name }}
         </div>
         <br>
+        Cover Photo: <a :href="recipeOutput.image">{{ recipeOutput.image }}</a>
+        <br><br>
         <div>
             Serving sizes:
             <span class="answer">{{ recipeOutput.yield }} {{ recipeOutput.yieldUnit }}</span>
@@ -52,12 +54,6 @@
         Preparation Time: <span class="answer">{{ recipeOutput.duration }}min</span>
         Ready In Time: <span class="answer">{{ recipeOutput.durationTotal }}min</span>
         <br><br>
-        Description: 
-        <br>
-        <div class="answer" v-for="instructions in recipeOutput.instructions" :key="instructions.id">
-            {{ instructions }}
-            <br><br>
-        </div>
         General Ingredients:
         <br>
         <div class="answer" v-for="(ingredientsBases, i) in recipeOutput.ingredientsBases" :key="ingredientsBases.id">
@@ -68,6 +64,12 @@
               </div>
             </div>
             <br>
+        </div>
+        Instruction: 
+        <br>
+        <div class="answer" v-for="instructions in recipeOutput.instructions" :key="instructions.id">
+            {{ instructions }}
+            <br><br>
         </div>
         Steps:
         <br>
@@ -118,7 +120,7 @@ export default {
     components: {
         completedTask,
     },
-    name: 'recipe-translator-de',
+    name: 'recipe-translator-en',
     props: {
     },
     data(){
@@ -145,14 +147,15 @@ export default {
                 tags: "",
                 steps: "",
                 yield: "",
-                yieldUnit: ""
+                yieldUnit: "",
+                image: ""
             },
         }
     },
     methods: {
         searchData(){
             let result = this.recipeInput.filter(recipe => recipe.id == this.searchID 
-                                                            || (recipe.name.replace(/-/g," ").replace(/#/g,"").slice(0, this.searchName.length).toLowerCase() == this.searchName.replace(/-/g," ").toLowerCase()
+                                                            || (recipe.name.replace(/-/g," ").replace(/#/g,"").slice(0, this.searchName.length).toLowerCase() == this.searchName.toLowerCase()
                                                             && recipe.machineType == this.searchMC));
             this.result = result
             if(result.length !== 0){
@@ -175,7 +178,8 @@ export default {
                     tags: result.tags,
                     steps: steps,
                     yield: result.yield,
-                    yieldUnit: result.yieldUnit
+                    yieldUnit: result.yieldUnit,
+                    image: result.imageBase+result.imageName
                     }
             } else {
                 this.isFound = false;
@@ -192,7 +196,7 @@ export default {
                              id: this.recipeOutput.id,
                              machineType: this.recipeOutput.machineType}           
             return this.$store.commit("updataList", addItem)
-        }
+        },
     },
     computed: {
         recipeInput(){
@@ -228,5 +232,8 @@ export default {
 }
 .modeParameter{
     margin-left: 50px;
+}
+a {
+    color: #b61e39;
 }
 </style>
