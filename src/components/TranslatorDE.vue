@@ -51,8 +51,14 @@
             <span class="answer">{{ recipeOutput.yield }} {{ recipeOutput.yieldUnit }}</span>
         </div>
         <br>
-        Preparation Time: <span class="answer">{{ recipeOutput.duration }}min</span>
-        Ready In Time: <span class="answer">{{ recipeOutput.durationTotal }}min</span>
+        Preparation Time: 
+        <span class="answer" v-if="recipeOutput.duration >= 60">{{ Math.floor(recipeOutput.duration/60) }}hr {{ recipeOutput.duration%60 }}min</span>
+        <span class="answer" v-else>{{ recipeOutput.duration }}min</span>
+
+        Ready In Time: 
+        <span class="answer" v-if="recipeOutput.durationTotal >= 60">{{ Math.floor(recipeOutput.durationTotal/60) }}hr {{ recipeOutput.durationTotal%60 }}min</span>
+        <span class="answer" v-else>{{ recipeOutput.durationTotal }}min</span>
+
         <br><br>
         General Ingredients:
         <br>
@@ -94,7 +100,9 @@
                         Rotation: <span class="answer">{{ step.machineValues.reverse }}</span>
                         Speed: <span class="answer">{{ step.machineValues.speed }}</span>
                         Temperature: <span class="answer">{{ step.machineValues.temp }}°C</span>
-                        Time: <span class="answer">{{ step.machineValues.time }}s</span>
+                        Time: 
+                        <span class="answer" v-if="step.machineValues.time >= 60">{{ Math.floor(step.machineValues.time/60) }}min {{ step.machineValues.time%60 }}s</span>
+                        <span class="answer" v-else>{{ step.machineValues.time }}s</span>
                     </div>
                     </div>
 
