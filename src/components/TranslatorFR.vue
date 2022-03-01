@@ -4,7 +4,7 @@
         <b-form-input class="input" v-model="searchID" placeholder="Enter ID"></b-form-input>
         OR
         <b-form-input class="input" v-model="searchName" placeholder="Enter recipe name"></b-form-input>
-        <b-form-select v-model="searchMC">
+        <b-form-select v-if="searchName" v-model="searchMC">
             <option disabled value="">Select Machine type</option>
             <option>mc1</option>
             <option>mc2</option>
@@ -35,7 +35,7 @@
         Nutrients (Per Serving):
         <br>
         <div class="answer" v-for="nutrients in recipeOutput.nutrients" :key="nutrients.id">
-            {{ nutrients.type }}: {{ nutrients.amount }} {{ nutrients.unit }}
+            <div v-if="nutrients.type !== 'joules'">{{ nutrients.type }}: {{ nutrients.amount }} {{ nutrients.unit }}</div>
         </div>
         <br>
         Category:
@@ -129,7 +129,7 @@ export default {
             result: null,
             isFound: false,
             searchMC: null,
-            searchName: null,
+            searchName: "",
             searchID: null,
             recipeOutput: {
                 name: "",
