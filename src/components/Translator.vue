@@ -84,7 +84,7 @@
         <div v-for="(step, i) in recipeOutput.steps" :key="step.id">
             Step{{i+1}}: 
                 <span class="answer" v-if="step.text != ''">{{ step.text }}</span>
-                <span class="answer" v-else>Preparation</span>
+                <span class="answer" v-else>{{ modeName }}</span>
             <br>
                 <span v-if="step.mode != 'instruction'">
 
@@ -215,6 +215,20 @@ export default {
     computed: {
         recipeInput(){
             return this.$store.state.recipes
+        },
+        modeName(){
+            switch (this.recipeOutput.language) {
+                case "fr":
+                    return "Préparation";
+                case "de":
+                    return "Verrühren";
+                case "it":
+                    return "Preparazione";
+                case "pl":
+                    return "Przygotowanie";
+                default:
+                    return "Preparation";
+                }
         }
     }
 }
