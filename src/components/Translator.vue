@@ -185,6 +185,9 @@ export default {
                 this.isFound = true;
                 result = result[0]
                 let steps = result.guidedCooking.steps
+                let imageName = result.imageName.replace(result.imageName.substring(
+                                    result.imageName.lastIndexOf("_"), 
+                                    result.imageName.lastIndexOf(".")), "")
                 this.recipeOutput = {
                     name: result.name,
                     id: result.id,
@@ -203,7 +206,7 @@ export default {
                     steps: steps,
                     yield: result.yield,
                     yieldUnit: result.yieldUnit,
-                    image: result.imageBase+result.imageName
+                    image: result.imageBase+imageName
                     }
             } else {
                 this.isFound = false;
