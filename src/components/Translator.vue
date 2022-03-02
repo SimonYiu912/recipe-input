@@ -112,7 +112,7 @@
                         Speed: <span class="answer">{{ step.machineValues.speed }}</span>
                         Temperature: <span class="answer">{{ step.machineValues.temp }}°C</span>
                         Time: 
-                        <span class="answer" v-if="step.machineValues.time >= 60">{{ Math.floor(step.machineValues.time/60) }}min {{ step.machineValues.time%60 }}s</span>
+                        <span class="answer" v-if="step.machineValues.time >= 60">{{ Math.floor(step.machineValues.time/60) }}min {{ step.machineValues.time%60 }}s ~ {{ step.machineValues.time }}s</span>
                         <span class="answer" v-else>{{ step.machineValues.time }}s</span>
                     </div>
                     </div>
