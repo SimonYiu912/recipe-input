@@ -67,7 +67,7 @@
         <span class="answer" v-else>{{ recipeOutput.duration }}min</span>
 
         Ready In Time: 
-        <span class="answer" v-if="recipeOutput.durationTotal >= 60">{{ Math.floor(recipeOutput.durationTotal/60) }}hr {{ recipeOutput.durationTotal%60 }}min</span>
+        <span class="answer" v-if="recipeOutput.durationTotal >= 60">{{ Math.floor(recipeOutput.durationTotal/60) }}hr {{ recipeOutput.durationTotal%60 }}min ~ {{ recipeOutput.durationTotal }}min</span>
         <span class="answer" v-else>{{ recipeOutput.durationTotal }}min</span>
 
         <br><br>
@@ -176,7 +176,7 @@ export default {
     methods: {
         searchData(){
             let searchOriginID = this.searchID + this.searchLanguage;
-            console.log(searchOriginID)
+
             let result = this.recipeInput.filter(recipe => recipe.originID == searchOriginID
                                                             || (recipe.name.replace(/-/g," ").replace(/#/g,"").slice(0, this.searchName.length).toLowerCase() == this.searchName.toLowerCase()
                                                             && recipe.machineType == this.searchMC));
