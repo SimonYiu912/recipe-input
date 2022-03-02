@@ -1,6 +1,15 @@
 <template>
   <div class="translator">
     <div class="form" @keyup.enter="searchData">
+        <b-form-select v-model="searchLanguage">
+            <option disabled value="">Select Languages</option>
+            <option>EN</option>
+            <option>DE</option>
+            <option>FR</option>
+            <option>IT</option>
+            <option>DE</option>
+        </b-form-select>
+
         <b-form-input class="input" v-model="searchID" placeholder="Enter ID"></b-form-input>
         OR
         <b-form-input class="input" v-model="searchName" placeholder="Enter recipe name"></b-form-input>
@@ -138,6 +147,7 @@ export default {
             completedTasksList: [],
             result: null,
             isFound: false,
+            searchLanguage: "",
             searchMC: null,
             searchName: "",
             searchID: null,
@@ -165,8 +175,9 @@ export default {
     },
     methods: {
         searchData(){
-            let result = this.recipeInput.filter(recipe => recipe.id == this.searchID
-                                                            || recipe.originID == this.searchID
+            let searchOriginID = this.searchID + this.searchLanguage;
+            console.log(searchOriginID)
+            let result = this.recipeInput.filter(recipe => recipe.originID == searchOriginID
                                                             || (recipe.name.replace(/-/g," ").replace(/#/g,"").slice(0, this.searchName.length).toLowerCase() == this.searchName.toLowerCase()
                                                             && recipe.machineType == this.searchMC));
             this.result = result
