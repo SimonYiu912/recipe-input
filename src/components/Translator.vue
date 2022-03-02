@@ -19,7 +19,7 @@
             <h5>
                 You may want to find: 
                 <span class="answer" v-for="result in result" :key="result.id">
-                    {{ result.name }},
+                    {{ result.name }} ({{ result.originID }}),
                 </span>
             </h5>
         </div>
@@ -27,6 +27,8 @@
         Recipe Title: <span class="answer">{{ recipeOutput.name }}</span>
         <br><br>
         Recipe ID: <span class="answer">{{ recipeOutput.id }}</span>
+        <br><br>
+        Language: <span class="answer">{{ recipeOutput.language }}</span>
         <br><br>
         Machine Type: <span class="answer">{{ recipeOutput.machineType }}</span>
         <br><br>
@@ -110,25 +112,25 @@
                 </span>
             <br>
         </div>
-        <b-button variant="danger" @click="addToList">Done</b-button>
+        <!-- <b-button variant="danger" @click="addToList">Done</b-button> -->
     </div>
 
     <div class="notFound" v-else>
         Result Not Found
     </div>
 
-    <completedTask :completedTasksList="completedTasksList" />
+    <!-- <completedTask :completedTasksList="completedTasksList" /> -->
   </div>
 </template>
 
 <script>
-import completedTask from './completedTask.vue'
+// import completedTask from './completedTask.vue'
 
 export default {
     components: {
-        completedTask,
+        // completedTask,
     },
-    name: 'recipe-translator-en',
+    name: 'recipe-translator',
     props: {
     },
     data(){
@@ -142,6 +144,7 @@ export default {
             recipeOutput: {
                 name: "",
                 id: "",
+                language: "",
                 machineType: "",
                 complexity: "",
                 instructions: "",
@@ -162,7 +165,8 @@ export default {
     },
     methods: {
         searchData(){
-            let result = this.recipeInput.filter(recipe => recipe.id == this.searchID 
+            let result = this.recipeInput.filter(recipe => recipe.id == this.searchID
+                                                            || recipe.originID == this.searchID
                                                             || (recipe.name.replace(/-/g," ").replace(/#/g,"").slice(0, this.searchName.length).toLowerCase() == this.searchName.toLowerCase()
                                                             && recipe.machineType == this.searchMC));
             this.result = result
@@ -173,6 +177,7 @@ export default {
                 this.recipeOutput = {
                     name: result.name,
                     id: result.id,
+                    language: result.language,
                     machineType: result.machineType,
                     complexity: result.complexity,
                     instructions: result.instructions,
@@ -202,13 +207,14 @@ export default {
         addToList(){
             let addItem = {name: this.recipeOutput.name,
                              id: this.recipeOutput.id,
-                             machineType: this.recipeOutput.machineType}           
+                             machineType: this.recipeOutput.machineType,
+                             language: this.recipeOutput.language}           
             return this.$store.commit("updataList", addItem)
         },
     },
     computed: {
         recipeInput(){
-            return this.$store.state.ENrecipe
+            return this.$store.state.recipes
         }
     }
 }

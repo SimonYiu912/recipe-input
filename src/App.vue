@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">EN</router-link> |
-      <router-link to="/de">DE</router-link> |
-      <router-link to="/fr">FR</router-link>
+      <router-link to="/"></router-link>
     </nav>
     <router-view/>
   </div>
