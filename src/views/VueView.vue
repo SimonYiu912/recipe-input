@@ -46,8 +46,8 @@
           "id": 1,
           "amount": {{ recipeOutput.yield }},
           "unit": "{{ recipeOutput.yieldUnit }}",
-          "instruction": ["
-          <div class="answer" v-for="instructions in recipeOutput.instructions" :key="instructions.id">
+          "instruction": [
+          "<div class="answer" v-for="instructions in recipeOutput.instructions" :key="instructions.id">
             {{ instructions }}\n\n
           </div>"],
           "preparationDuration": {{ recipeOutput.duration*60 }},
