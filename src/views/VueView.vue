@@ -60,7 +60,7 @@
                 <span v-if="step.text != '' && step.text.length >= 80">"{{ step.text.slice(0, 76) }}..."</span>
                 <span v-else-if="step.text != ''">"{{ step.text }}"</span>
                 <span v-else>"Préparation"</span>
-                </span>""
+                </span><span v-else>""</span>
               ,
               "video": {
                 "landscape": {
