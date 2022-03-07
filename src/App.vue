@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/"></router-link>
+      <router-link to="/" style="color: white"></router-link>
+      <router-link to="/vue" style="color: white">Vue</router-link>
     </nav>
     <router-view/>
   </div>

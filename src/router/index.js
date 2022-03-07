@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import DEView from '../views/DEView.vue'
-import FRView from '../views/FRView.vue'
+import VueView from '../views/VueView.vue'
+
 
 Vue.use(VueRouter)
 
@@ -13,14 +13,9 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/de',
-    name: 'DE',
-    component: DEView
-  },
-  {
-    path: '/fr',
-    name: 'FR',
-    component: FRView
+    path: '/vue',
+    name: 'vue',
+    component: VueView
   },
 ]
 

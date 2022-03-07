@@ -67,7 +67,7 @@
         <span class="answer" v-else>{{ recipeOutput.duration }}min</span>
 
         Ready In Time: 
-        <span class="answer" v-if="recipeOutput.durationTotal >= 60">{{ Math.floor(recipeOutput.durationTotal/60) }}hr {{ recipeOutput.durationTotal%60 }}min ~ {{ recipeOutput.durationTotal }}min</span>
+        <span class="answer" v-if="recipeOutput.durationTotal >= 60">{{ Math.floor(recipeOutput.durationTotal/60) }}hr {{ recipeOutput.durationTotal%60 }}min ~ ({{ recipeOutput.durationTotal }}min)</span>
         <span class="answer" v-else>{{ recipeOutput.durationTotal }}min</span>
 
         <br><br>
@@ -93,7 +93,7 @@
         <div v-for="(step, i) in recipeOutput.steps" :key="step.id">
             Step{{i+1}}: 
                 <span class="answer" v-if="step.text != ''">{{ step.text }}</span>
-                <span class="answer" v-else>{{ modeName }}</span>
+                <span class="answer" v-else>{{ titleName }}</span>
             <br>
                 <span v-if="step.mode != 'instruction'">
 
@@ -112,28 +112,25 @@
                         Speed: <span class="answer">{{ step.machineValues.speed }}</span>
                         Temperature: <span class="answer">{{ step.machineValues.temp }}°C</span>
                         Time: 
-                        <span class="answer" v-if="step.machineValues.time >= 60">{{ Math.floor(step.machineValues.time/60) }}min {{ step.machineValues.time%60 }}s ~ {{ step.machineValues.time }}s</span>
+                        <span class="answer" v-if="step.machineValues.time >= 60">{{ Math.floor(step.machineValues.time/60) }}min {{ step.machineValues.time%60 }}s ~ ({{ step.machineValues.time }}s)</span>
                         <span class="answer" v-else>{{ step.machineValues.time }}s</span>
                     </div>
                     </div>
-
                     </div>
                 </span>
             <br>
         </div>
-        <!-- <b-button variant="danger" @click="addToList">Done</b-button> -->
     </div>
 
     <div class="notFound" v-else>
         Result Not Found
     </div>
 
-    <!-- <completedTask :completedTasksList="completedTasksList" /> -->
   </div>
 </template>
 
 <script>
-// import completedTask from './completedTask.vue'
+import axios from "axios"
 
 export default {
     components: {
@@ -144,13 +141,101 @@ export default {
     },
     data(){
         return{
+            stringTranslation: {
+                            "EN": {
+                                "kneading": "Knead",
+                                "steaming": "Steam",
+                                "roasting": "Brown",
+                                "scale": "Scales",
+                                "cooking": "Adapted cooking",
+                                "sousVide": "Sous-vide",
+                                "slowCooking": "Slow-cook",
+                                "cookingEggs": "Cook eggs",
+                                "precleaning": "Prerinse",
+                                "fermentation": "Ferment",
+                                "riceCooking": "Cooking rice",
+                                "turbo": "Turbo",
+                                "ramp": "Ramp",
+                                "puree": "Puree",
+                                "smoothie": "Smoothie"
+                            },
+                            "FR": {
+                                "kneading":"Pétrir",
+                                "steaming":"Cuire à la vapeur",
+                                "roasting":"Saisir",
+                                "scale":"Balance",
+                                "cooking":"Cuisine manuelle",
+                                "sousVide":"Sous vide",
+                                "slowCooking":"Slow cook",
+                                "cookingEggs":"Cuire des œufs",
+                                "precleaning":"Pré rinçage",
+                                "fermentation":"Fermenter",
+                                "riceCooking":"Cuire du riz",
+                                "turbo":"Turbo",
+                                "ramp":"Rampe",
+                                "puree":"Mixer",
+                                "smoothie":"Smoothie"
+                            },
+                            "PL": {
+                                "kneading":"Ugniatanie",
+                                "steaming":"Gotowanie na parze",
+                                "roasting":"Podsmażanie",
+                                "scale":"Waga",
+                                "cooking":"Własne ustawienia",
+                                "sousVide":"Sous-vide",
+                                "slowCooking":"Slow cook",
+                                "cookingEggs":"Gotowanie jajek",
+                                "precleaning":"Opłukanie",
+                                "fermentation":"Fermentacja",
+                                "riceCooking":"Gotowanie ryżu",
+                                "turbo":"Turbo",
+                                "ramp":"Zwiększanie prędkości",
+                                "puree":"Rozdrabnianie na piure",
+                                "smoothie":"Smoothie"
+                            },
+                            "IT": {
+                                "kneading":"Impastare",
+                                "steaming":"Cottura al vapore",
+                                "roasting":"Rosolare",
+                                "scale":"Bilancia",
+                                "cooking":"Cottura personalizzata",
+                                "sousVide":"Sous-vide",
+                                "slowCooking":"Slow Cook",
+                                "cookingEggs":"Bollire uova",
+                                "precleaning":"Prelavaggio",
+                                "fermentation":"Fermentazione",
+                                "riceCooking":"Cuocere il riso",
+                                "turbo":"Turbo",
+                                "ramp":"Rampa",
+                                "puree":"Passare",
+                                "smoothie":"Smoothie"
+                            },
+                            "DE": {
+                                "kneading":"Kneten",
+                                "steaming":"Dampfgaren",
+                                "roasting":"Anbraten",
+                                "scale":"Waage",
+                                "cooking":"Manuelles Kochen",
+                                "sousVide":"Sous-vide",
+                                "slowCooking":"Slow-cook",
+                                "cookingEggs":"Eier kochen",
+                                "precleaning":"Vorspülen",
+                                "fermentation":"Fermentieren",
+                                "riceCooking":"Reis kochen",
+                                "turbo":"Turbo",
+                                "ramp":"Rampe",
+                                "puree":"Pürieren",
+                                "smoothie":"Smoothie"
+                            }
+                    },
             completedTasksList: [],
             result: null,
             isFound: false,
-            searchLanguage: "",
+            searchLanguage: "FR",
             searchMC: null,
             searchName: "",
-            searchID: null,
+            searchID: "",
+            recipeInput: "",
             recipeOutput: {
                 name: "",
                 id: "",
@@ -211,6 +296,7 @@ export default {
             } else {
                 this.isFound = false;
             } 
+            this.addToList()
         },
         clearInput(){
             this.searchMC = "";
@@ -218,19 +304,12 @@ export default {
             this.searchID = "";
             this.isFound = false;
         },
-        addToList(){
-            let addItem = {name: this.recipeOutput.name,
-                             id: this.recipeOutput.id,
-                             machineType: this.recipeOutput.machineType,
-                             language: this.recipeOutput.language}           
-            return this.$store.commit("updataList", addItem)
+        addToList(){      
+            return this.$store.commit("sendList", this.recipeOutput)
         },
     },
     computed: {
-        recipeInput(){
-            return this.$store.state.recipes
-        },
-        modeName(){
+        titleName(){
             switch (this.recipeOutput.language) {
                 case "fr":
                     return "Préparation";
@@ -243,9 +322,14 @@ export default {
                 default:
                     return "Preparation";
                 }
+        },
+    },
+    mounted(){
+        axios
+        .get('https://raw.githubusercontent.com/SimonYiu912/recipeData/main/db.json')
+        .then(response => (this.recipeInput = response.data))
         }
     }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
