@@ -231,7 +231,7 @@ export default {
             completedTasksList: [],
             result: null,
             isFound: false,
-            searchLanguage: "FR",
+            searchLanguage: "EN",
             searchMC: null,
             searchName: "",
             searchID: "",
