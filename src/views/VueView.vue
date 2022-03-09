@@ -19,9 +19,9 @@
           "invalidMessageKey": "recipeTitleIsRequired"
         },
         "description": "",
-        "level": "<span v-if="recipeOutput.complexity == 'Facile'">beginner-fr</span>
-        <span v-else-if="recipeOutput.complexity == 'Moyen'">intermediate-fr</span>
-        <span v-else>expert-fr</span>",
+        "level": "<span v-if="recipeOutput.complexity == 'Easy'">beginner</span>
+        <span v-else-if="recipeOutput.complexity == 'Medium'">intermediate</span>
+        <span v-else>expert</span>",
         "nutrients": {
           "calories": {{ recipeOutput.nutrients[1].amount }},
           "protein": {{ recipeOutput.nutrients[2].amount }},
@@ -59,7 +59,7 @@
                 <span v-if="mcType == 'mc-smart'">
                 <span v-if="step.text != '' && step.text.length >= 80">"{{ step.text.slice(0, 76) }}..."</span>
                 <span v-else-if="step.text != ''">"{{ step.text }}"</span>
-                <span v-else>"Préparation"</span>
+                <span v-else>"Preparation"</span>
                 </span><span v-else>""</span>
               ,
               "video": {
@@ -99,7 +99,7 @@
           ],
           "ingredientGroups": [
             {
-              "title": "Ingrédients courants",
+              "title": "General Ingredients",
               "isEditingTitle": false,
               "isCollapsed": false,
               "ingredients": []
