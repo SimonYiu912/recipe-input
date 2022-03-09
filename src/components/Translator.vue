@@ -90,7 +90,9 @@
         </div>
         Steps:
         <br>
+
         <div v-for="(step, i) in recipeOutput.steps" :key="step.id">
+            <hr>
             Step{{i+1}}: 
                 <span class="answer" v-if="step.text != ''">{{ step.text }}</span>
                 <span class="answer" v-else>{{ titleName }}</span>
@@ -361,5 +363,8 @@ export default {
 }
 a {
     color: #b61e39;
+}
+hr {
+    color: black;
 }
 </style>
