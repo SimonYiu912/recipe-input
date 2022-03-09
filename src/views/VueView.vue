@@ -45,7 +45,7 @@
         {
           "id": 1,
           "amount": {{ recipeOutput.yield }},
-          "unit": "{{ recipeOutput.yieldUnit }}",
+          "unit": "{{ recipeOutput.yieldUnit.charAt(0).toUpperCase() + recipeOutput.yieldUnit.slice(1) }}",
           "instruction": [
           "<span class="answer" v-for="instructions in recipeOutput.instructions" :key="instructions.id">
             {{ instructions }}\n\n
