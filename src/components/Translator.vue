@@ -55,7 +55,7 @@
             {{ tags.name }}
         </div>
         <br>
-        Cover Photo: <a :href="recipeOutput.image">{{ recipeOutput.image }}</a>
+        Cover Photo: <img :src="recipeOutput.image" style="width: 300px" /><a :href="recipeOutput.image">{{ recipeOutput.image }}</a>
         <br><br>
         <div>
             Serving sizes:
