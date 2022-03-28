@@ -1,12 +1,12 @@
 <template>
   <div class="vue">
+    <div>document.querySelector('#app').__vue__.$store._modules.root.state.createRecipe</div>
     <b-form-select v-model="mcType">
             <option disabled value="">Select MC</option>
             <option>mc-smart</option>
             <option>mc-connect</option>
             <option>mc-plus</option>
-        </b-form-select>
-
+    </b-form-select>
     <div>
     {
       "applicableDevice": "{{ mcType }}",
@@ -19,9 +19,9 @@
           "invalidMessageKey": "recipeTitleIsRequired"
         },
         "description": "",
-        "level": "<span v-if="recipeOutput.complexity == 'Easy'">beginner</span>
-        <span v-else-if="recipeOutput.complexity == 'Medium'">intermediate</span>
-        <span v-else>expert</span>",
+        "level": "<span v-if="recipeOutput.complexity == 'Easy'">beginner<span v-if="recipeOutput.language !== 'EN'">-{{ recipeOutput.language.toLowerCase() }}</span></span>
+        <span v-else-if="recipeOutput.complexity == 'Medium'">intermediate<span v-if="recipeOutput.language !== 'EN'">-{{ recipeOutput.language.toLowerCase() }}</span></span>
+        <span v-else>expert<span v-if="recipeOutput.language !== 'EN'">-{{ recipeOutput.language.toLowerCase() }}</span></span>",
         "nutrients": {
           "calories": {{ recipeOutput.nutrients[1].amount }},
           "protein": {{ recipeOutput.nutrients[2].amount }},

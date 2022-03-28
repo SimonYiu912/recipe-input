@@ -233,7 +233,7 @@ export default {
             completedTasksList: [],
             result: null,
             isFound: false,
-            searchLanguage: "EN",
+            searchLanguage: "",
             searchMC: null,
             searchName: "",
             searchID: "",
@@ -293,7 +293,8 @@ export default {
                     steps: steps,
                     yield: result.yield,
                     yieldUnit: result.yieldUnit,
-                    image: result.imageBase+imageName
+                    image: result.imageBase+imageName,
+                    language: this.searchLanguage
                     }
             } else {
                 this.isFound = false;

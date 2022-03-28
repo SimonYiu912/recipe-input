@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/" style="color: white"></router-link>
-      <router-link to="/vue" style="color: white">Vue</router-link>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/vue">Vuex</router-link>
     </nav>
     <router-view/>
   </div>
