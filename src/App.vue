@@ -2,7 +2,7 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/vue">Vuex</router-link>
+      <router-link id="toVuex" to="/vue">Vuex</router-link>
     </nav>
     <router-view/>
   </div>

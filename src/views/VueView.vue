@@ -1,13 +1,13 @@
 <template>
   <div class="vue">
     <div>document.querySelector('#app').__vue__.$store._modules.root.state.createRecipe</div>
-    <b-form-select v-model="mcType">
+    <b-form-select id="selectMC" v-model="mcType">
             <option disabled value="">Select MC</option>
             <option>mc-smart</option>
             <option>mc-connect</option>
             <option>mc-plus</option>
     </b-form-select>
-    <div>
+    <div class="recipe-content">
     {
       "applicableDevice": "{{ mcType }}",
       "recipeInfo": {
@@ -23,10 +23,10 @@
         <span v-else-if="recipeOutput.complexity == 'Medium'">intermediate<span v-if="recipeOutput.language !== 'EN'">-{{ recipeOutput.language.toLowerCase() }}</span></span>
         <span v-else>expert<span v-if="recipeOutput.language !== 'EN'">-{{ recipeOutput.language.toLowerCase() }}</span></span>",
         "nutrients": {
-          "calories": {{ recipeOutput.nutrients[1].amount }},
-          "protein": {{ recipeOutput.nutrients[2].amount }},
-          "carbohydrate": {{ recipeOutput.nutrients[3].amount }},
-          "fat": {{ recipeOutput.nutrients[4].amount }}
+          "calories": "{{ recipeOutput.nutrients[1].amount }}",
+          "protein": "{{ recipeOutput.nutrients[2].amount }}",
+          "carbohydrate": "{{ recipeOutput.nutrients[3].amount }}",
+          "fat": "{{ recipeOutput.nutrients[4].amount }}"
         },
         "categories": [
         ],
@@ -40,16 +40,15 @@
           "beSync": false
         }
       },
-    </div>
       "servingSizes": [
         {
           "id": 1,
           "amount": {{ recipeOutput.yield }},
           "unit": "{{ recipeOutput.yieldUnit.charAt(0).toUpperCase() + recipeOutput.yieldUnit.slice(1) }}",
           "instruction": [
-          "<span class="answer" v-for="instructions in recipeOutput.instructions" :key="instructions.id">
-            {{ instructions }}\n\n
-          </span>"],
+          <span class="answer" v-for="(instructions, i) in recipeOutput.instructions" :key="instructions.id">
+            "{{ instructions }}"<span v-if="i != recipeOutput.instructions.length - 1">, </span>
+          </span>],
           "preparationDuration": {{ recipeOutput.duration*60 }},
           "duration": {{ recipeOutput.durationTotal*60 }},
           "steps": [
@@ -125,15 +124,15 @@
           ],
         "ingredients": [
             <div v-for="(ingredientGroup, i) in recipeOutput.ingredientsBases" :key="ingredientGroup.id">
-              <div v-for="ingredient in recipeOutput.ingredientsBases[i].ingredients" :key="ingredient.id">
+              <div v-for="(ingredient, j) in recipeOutput.ingredientsBases[i].ingredients" :key="ingredient.id">
                 {
                   "amount": "{{ ingredient.amount }}",
                   "unit": "{{ ingredient.unit }}",
                   "name": "{{ ingredient.name }}",
                   "system_ingredient": -1,
                   "ingredient_group_id": "{{ i }}"
-                }<span v-if="i != recipeOutput.ingredientsBases[i].ingredients.length - 1">, </span>
-              </div><span v-if="i == recipeOutput.ingredientsBases[i].ingredients.length - 1 && i != recipeOutput.ingredientsBases.length -1">, </span>
+                }<span v-if="(i == recipeOutput.ingredientsBases.length-1) && (j == recipeOutput.ingredientsBases[recipeOutput.ingredientsBases.length-1].ingredients.length-1)"></span><span v-else>,</span>
+              </div>
             </div>
           ]
         }
@@ -145,6 +144,7 @@
       "creationDate": "",
       "allowSocialSharing": false
 }
+  </div>
   </div>
 </template>
 
@@ -164,7 +164,7 @@ export default {
     recipeOutput(){
       return this.$store.state.recipeOutput
     },
-  },
+  }
 }
 </script>
 

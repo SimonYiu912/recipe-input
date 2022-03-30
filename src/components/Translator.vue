@@ -1,7 +1,7 @@
 <template>
   <div class="translator">
     <div class="form" @keyup.enter="searchData">
-        <b-form-select v-model="searchLanguage">
+        <b-form-select id="selectLang" v-model="searchLanguage">
             <option disabled value="">Select Languages</option>
             <option>EN</option>
             <option>DE</option>
@@ -10,7 +10,7 @@
             <option>PL</option>
         </b-form-select>
 
-        <b-form-input class="input" v-model="searchID" placeholder="Enter ID"></b-form-input>
+        <b-form-input id="searchID" class="input" v-model="searchID" placeholder="Enter ID"></b-form-input>
         OR
         <b-form-input class="input" v-model="searchName" placeholder="Enter recipe name"></b-form-input>
         <b-form-select v-if="searchName" v-model="searchMC">
@@ -19,7 +19,7 @@
             <option>mc2</option>
         </b-form-select>
 
-        <b-button class="search" variant="danger" @click="searchData">Search</b-button>
+        <b-button id="searchButton" class="search" variant="danger" @click="searchData">Search</b-button>
         <b-button class="search" variant="warning" @click="clearInput">Clear</b-button>
     </div>
     
@@ -55,7 +55,7 @@
             {{ tags.name }}
         </div>
         <br>
-        Cover Photo: <img :src="recipeOutput.image" style="width: 300px" /><a :href="recipeOutput.image">{{ recipeOutput.image }}</a>
+        Cover Photo: <img :src="recipeOutput.image" style="width: 300px" /><a id="searchImage" :href="recipeOutput.image">{{ recipeOutput.image }}</a>
         <br><br>
         <div>
             Serving sizes:
